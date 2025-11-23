@@ -1,0 +1,27 @@
+body {
+    background: url("/art101new/images/DIY_emoji.GIF") center center fixed;
+    background-size: 97%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.first-page {
+    color: white;
+    font-size: 3rem;
+    text-shadow: 2px 2px 8px black;
+}
+.start-btn {
+    display: inline-block;
+    padding: 14px 28px;
+    font-size: 1.2rem;
+    color: white;
+    text-decoration: none;
+    background: rgba (0, 0, 0, 0.6);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px black;
+}
+
+.start-btn {
+    background: rgb(81, 1, 81);
+}
