@@ -50,11 +50,10 @@ header { margin: 0; padding: 6px 0 0; text-align: center; }
 }
 
 .slug {
+    position: fixed;
     display: block;
     width: 140px;
-    margin: 12px auto 0;
     position: fixed;
-    width: 130px;
     top: 160px;
     left:120px;
 }
@@ -203,29 +202,45 @@ body {
     transform: translateX(-50%);
 }
 
-.corner-gif1 {
-    position: fixed;
-    width: 370px;
-    top: 5px;
-    right: -5px;
-    display: flex;
-    flex-direction: column;
-    z-index: 999;
-}
-.corner-gif2 {
-    position: fixed;
-    width: 200px;
-    top: 60px;
-    right:100px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    z-index: 999;
-}
-
-
-
 #emoji-face-shape { top: 0; }
 #emoji-eyes       { top: 60px; }   /* adjust this */
 #emoji-nose       { top: 120px; }  /* adjust this */
 #emoji-mouth      { top: 180px; }  /* adjust this */
+
+.corner-gif1,
+.corner-gif2 {
+position: fixed;
+display: flex;
+flex-direction: column;
+z-index: 999;
+}
+
+.corner-gif1 {
+    width: 370px;
+    top: 5px;
+    right: -5px;
+}
+.corner-gif2 {
+    width: 200px;
+    top: 60px;
+    right:100px;
+    gap: 5px;
+}
+/* Mobile responsive adjustments */
+@media (max-width: 600px) {
+    .corner-gif1 {
+        width: 200px;
+        right: 0;
+        top: 10px;
+    }
+    .corner-gif2 {
+        width: 120px;
+        right: 10px;
+        top: 50px;
+    }
+    .slug {
+        width: 100px;
+        top: 120px;
+        left: 80px;
+    }
+}
