@@ -11,24 +11,23 @@
 </head>
 
 <body>
+<div class="corner-gif1">
+        <img src="images/express-yourself.GIF" alt="">
+    </div>
 
-  <div class="corner-gif1">
-  <img src="images/express-yourself.GIF" alt="">
-  </div>
-
-  <div class="corner-gif2">
-  <img src="images/neon-arrow.GIF" alt="">
-</div>
-
+    <div class="corner-gif2">
+        <img src="images/neon-arrow.GIF" alt="">
+    </div>
+    
 <script>
 $(document).ready(function () {
-    $("body").css("display", "none").fadeIn(500);
+    $("body").css("opacity", 0).animate({opacity: 1}, 500);
 });
 </script>
 
 
     <header>
-        <img src="/DIY-emoji/images/wordmark.png" id="wordmark" alt="Wordmark">
+    <img src="/DIY-emoji/images/wordmark.png" id="wordmark" alt="Wordmark">
     </header>
 
     <main id="emoji-builder">
@@ -105,12 +104,15 @@ $(document).ready(function () {
             </a>
          </div>
 
-         <img src="images/slug.GIF" class="slug" alt="">
+         <img src="images/slug.GIF" class="slug" alt="Slug">
+    </div>
 
     </main>
     <!-- JavaScript -->
     <script src="emoji.js"></script>
 
+
+    
 </body>
 
 </html>
