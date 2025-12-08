@@ -1,27 +1,231 @@
-body {
-    background: url("/DIY-emoji/images/DIY_emoji.GIF") center center fixed;
-    background-size: 97%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-.first-page {
-    color: white;
-    font-size: 3rem;
-    text-shadow: 2px 2px 8px black;
-}
-.start-btn {
-    display: inline-block;
-    padding: 14px 28px;
-    font-size: 1.2rem;
-    color: white;
-    text-decoration: none;
-    background: rgba (0, 0, 0, 0.6);
-    border-radius: 10px;
-    box-shadow: 0 4px 12px black;
+
+#wordmark {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    display: block;
+    max-width: 300px;
+    height: auto;
 }
 
-.start-btn {
-    background: rgb(81, 1, 81);
+/* Wordmark hover/focus effect */
+#wordmark {
+	transition: transform 220ms cubic-bezier(.2,.8,.2,1), filter 220ms ease;
+	will-change: transform, filter;
 }
+
+#wordmark:hover,
+#wordmark:focus {
+	transform: translateY(-6px) scale(1.06);
+	cursor: pointer;
+	outline: none;
+}
+
+
+header { margin: 0; padding: 6px 0 0; text-align: center; }
+
+/* preview wrapper: place the preview and the save button side-by-side */
+.preview-wrap {
+	display: flex;
+    flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+}
+#saveit-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+}
+/* saveit button styling next to the preview */
+#saveit-link {
+	display: inline-block;
+
+}
+
+#saveit {
+	width: 100px;
+	height: auto;
+	display: block;
+	transition: transform 180ms ease, opacity 180ms ease;
+}
+
+.slug {
+    display: block;
+    width: 140px;
+    margin: 12px auto 0;
+    position: fixed;
+    width: 130px;
+    top: 160px;
+    left:120px;
+}
+
+#saveit-link:hover #saveit,
+#saveit-link:focus #saveit {
+	transform: translateY(-3px) scale(1.05);
+	opacity: 0.95;
+}
+
+main#emoji-builder { padding-top: 100px; }
+
+/* Page background: sunburst image with subtle dot overlay (keeps existing formatting) */
+body {
+	background-color: #fff9c4; /* light yellow base */
+	background-image: url('/DIY-emoji/images/line\ paper.jpg');
+	background-size: cover, 14px 14px;
+	background-repeat: no-repeat, repeat;
+	background-position: center top, 0 0;
+}
+
+
+:root {
+	--feature-img-size: 80px;
+}
+
+.feature-display img {
+	width: var(--feature-img-size);
+	height: var(--feature-img-size);
+	object-fit: contain; /* preserve aspect ratio inside the square */
+	display: none; /* only .active will be visible */
+}
+
+
+.feature-display img.active {
+	display: block;
+}
+
+
+#emoji-preview .feature-layer img {
+	width: var(--feature-img-size);
+	height: var(--feature-img-size);
+	object-fit: contain;
+	
+}
+
+.feature-display img[style] {
+
+	display: block !important;
+}
+
+
+.feature-display { display:flex; gap:8px; align-items:center; }
+
+/* Layout: put all feature control groups in a single horizontal row */
+#feature-controls {
+	display: flex;
+	gap: 24px;
+	align-items: flex-start;
+	justify-content: center;
+	flex-wrap: wrap; /* wrap to next row on narrow screens */
+	padding: 16px 8px;
+}
+
+.control-group {
+	/* use CSS Grid so we can place the heading and display above,
+		 and keep both arrows on the same row (aligned) below */
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: auto auto auto;
+	gap: 8px;
+	align-items: center;
+	background: rgba(255,255,255,0.6);
+	padding: 12px 16px;
+	border-radius: 8px;
+	min-width: 160px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+#emoji-preview {
+    position: relative;
+    width: 260px;
+    height: 220px;
+    margin: 6px auto 0;
+
+}
+
+.control-group h2 {
+	margin: 0;
+	font-size: 1rem;
+	grid-column: 1 / -1; /* span both columns */
+}
+
+.control-group .feature-display {
+	min-height: calc(var(--feature-img-size) + 8px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	grid-column: 1 / -1; /* span both columns */
+}
+
+/* Style arrows so they sit neatly next to the feature display */
+.control-group .arrow {
+	background: #f3f3f3;
+	border: 1px solid #ddd;
+	padding: 6px 10px;
+	cursor: pointer;
+	border-radius: 6px;
+}
+
+/* place the two arrows side-by-side on the third row */
+.control-group .left-arrow { grid-column: 1; grid-row: 3; justify-self: end; }
+.control-group .right-arrow { grid-column: 2; grid-row: 3; justify-self: start; }
+
+/* Responsive: stack control groups vertically on small screens */
+@media (max-width: 720px) {
+	#feature-controls {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+		.control-group {
+			width: 100%;
+			display: flex; /* switch to flex on small screens for a compact layout */
+			flex-direction: row;
+			justify-content: space-between;
+			padding: 10px;
+			align-items: center;
+		}
+
+		.control-group h2 {
+			margin-right: 12px;
+		}
+}
+
+#emoji-preview {
+	position: relative;
+	width: 300px;        
+	height: 300px;
+	margin: 6px auto 0; 
+}
+
+.feature-layer {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.corner-gif1 {
+    position: fixed;
+    width: 370px;
+    top: 5px;
+    right: -5px;
+    display: flex;
+    flex-direction: column;
+    z-index: 999;
+}
+.corner-gif2 {
+    position: fixed;
+    width: 200px;
+    top: 60px;
+    right:100px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 999;
+}
+
+
+
+#emoji-face-shape { top: 0; }
+#emoji-eyes       { top: 60px; }   /* adjust this */
+#emoji-nose       { top: 120px; }  /* adjust this */
+#emoji-mouth      { top: 180px; }  /* adjust this */
