@@ -8,7 +8,6 @@
     height: auto;
 }
 
-/* Wordmark hover/focus effect */
 #wordmark {
 	transition: transform 220ms cubic-bezier(.2,.8,.2,1), filter 220ms ease;
 	will-change: transform, filter;
@@ -20,7 +19,6 @@
 	cursor: pointer;
 	outline: none;
 }
-
 .corner-gif1,
 .corner-gif2 {
     position: absolute;
@@ -49,7 +47,6 @@
 
 header { margin: 0; padding: 6px 0 0; text-align: center; }
 
-/* preview wrapper: place the preview and the save button side-by-side */
 .preview-wrap {
 	display: flex;
     flex-direction: column;
@@ -61,18 +58,19 @@ header { margin: 0; padding: 6px 0 0; text-align: center; }
     justify-content: center;
     margin-top: 16px;
 }
-/* saveit button styling next to the preview */
+
 #saveit-link {
 	display: inline-block;
 
 }
 
 #saveit {
-	width: 100px;
+	width: 200px;
 	height: auto;
 	display: block;
 	transition: transform 180ms ease, opacity 180ms ease;
 }
+
 
 #saveit-link:hover #saveit,
 #saveit-link:focus #saveit {
@@ -82,15 +80,12 @@ header { margin: 0; padding: 6px 0 0; text-align: center; }
 
 main#emoji-builder { padding-top: 100px; }
 
-/* Page background: sunburst image with subtle dot overlay (keeps existing formatting) */
 body {
-	background-color: #fff9c4; /* light yellow base */
 	background-image: url('/DIY-emoji/images/line\ paper.jpg');
 	background-size: cover, 14px 14px;
 	background-repeat: no-repeat, repeat;
 	background-position: center top, 0 0;
 }
-
 
 :root {
 	--feature-img-size: 80px;
@@ -99,10 +94,9 @@ body {
 .feature-display img {
 	width: var(--feature-img-size);
 	height: var(--feature-img-size);
-	object-fit: contain; /* preserve aspect ratio inside the square */
-	display: none; /* only .active will be visible */
-}
+	object-fit: contain; 
 
+}
 
 .feature-display img.active {
 	display: block;
@@ -135,8 +129,6 @@ body {
 }
 
 .control-group {
-	/* use CSS Grid so we can place the heading and display above,
-		 and keep both arrows on the same row (aligned) below */
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	grid-template-rows: auto auto auto;
@@ -171,7 +163,6 @@ body {
 	grid-column: 1 / -1; /* span both columns */
 }
 
-/* Style arrows so they sit neatly next to the feature display */
 .control-group .arrow {
 	background: #f3f3f3;
 	border: 1px solid #ddd;
@@ -180,7 +171,6 @@ body {
 	border-radius: 6px;
 }
 
-/* place the two arrows side-by-side on the third row */
 .control-group .left-arrow { grid-column: 1; grid-row: 3; justify-self: end; }
 .control-group .right-arrow { grid-column: 2; grid-row: 3; justify-self: start; }
 
@@ -218,8 +208,17 @@ body {
     transform: translateX(-50%);
 }
 
-#emoji-face-shape { top: 0; }
-#emoji-eyes       { top: 60px; }   /* adjust this */
-#emoji-nose       { top: 120px; }  /* adjust this */
-#emoji-mouth      { top: 180px; }  /* adjust this */
+/* Face shape layer: move down so it's visually behind the nose, and make the blob larger */
+#emoji-face-shape { top: -10px; z-index: 10; }
+#emoji-eyes       { top: 60px; z-index: 20; }   /* adjust this */
+#emoji-nose       { top: 120px; z-index: 20; }  /* adjust this */
+#emoji-mouth      { top: 180px; z-index: 20; }  /* adjust this */
 
+
+#emoji-preview #emoji-face-shape img {
+	width: 250px; /* larger than feature size */
+	height: 320px;
+	object-fit: contain;
+	display: block;
+	pointer-events: none; /* avoid intercepting clicks on controls */
+}

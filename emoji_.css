@@ -19,6 +19,7 @@ body {
 .first-page {
     color: white;
     font-size: 3rem;
+    font-family: 'Courier New', Courier, monospace;
     text-shadow: 2px 2px 8px black;
 }
 .start-btn {
@@ -34,4 +35,5 @@ body {
 
 .start-btn {
     background: rgb(81, 1, 81);
+    font-family: 'Courier New', Courier, monospace;
 }

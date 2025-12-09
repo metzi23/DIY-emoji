@@ -6,49 +6,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Build Your Own Emoji</title>
 
-    <!-- Stylesheet -->
+    <!-- CSS -->
     <link rel="stylesheet" href="emoji.css" />
+
+    <!-- jQuery (LOAD THIS BEFORE ANY SCRIPT THAT USES IT) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="emoji.js" defer></script>
+
+
 </head>
 
 <body>
-<div class="corner-gif1">
-        <img src="images/express-yourself.GIF" alt="">
-    </div>
+  <div class="corner-gif1">
+  <img src="/DIY-emoji/images/express-yourself.GIF" alt="">
+  </div>
 
-    <div class="corner-gif2">
-        <img src="images/neon-arrow.GIF" alt="">
-    </div>
+  <div class="corner-gif2">
+  <img src="/DIY-emoji/images/neon-arrow.GIF" alt="">
+</div>
 
+<script>
+    $(document).ready(function () {
+    $("body").css("display", "none").fadeIn(500);
+    });
+ </script>
 
     <header>
-    <img src="/DIY-emoji/images/wordmark.png" id="wordmark" alt="Wordmark">
+        <img src="/DIY-emoji/images/wordmark.png" id="wordmark" alt="Wordmark">
     </header>
 
     <main id="emoji-builder">
 
-     
         <div class="preview-wrap">
-        <section id="emoji-preview">
-            <div id="emoji-face-shape" class="feature-layer"></div>
-            <div id="emoji-eyes" class="feature-layer"></div>
-            <div id="emoji-nose" class="feature-layer"></div>
-            <div id="emoji-mouth" class="feature-layer"></div>
-        </section>
-       
+            <section id="emoji-preview">
+                <div id="emoji-face-shape" class="feature-layer"></div>
+                <div id="emoji-eyes" class="feature-layer"></div>
+                <div id="emoji-nose" class="feature-layer"></div>
+                <div id="emoji-mouth" class="feature-layer"></div>
+            </section>
 
-      
+            <!-- Save button -->
+            <a id="saveit-link" href="#" title="Save" aria-label="Save">
+                <img src="/DIY-emoji/images/saveit.png" id="saveit" alt="Save">
+            </a>
+        </div>
 
-        <!-- Controls -->
+
+        <!-- FEATURE CONTROLS -->
         <section id="feature-controls">
 
             <!-- Face Shape -->
             <div class="control-group" data-feature="face-shape">
                 <h2>Face Shape</h2>
-                <button class="arrow left-arrow" data-direction="prev">←</button>
-                <div class="feature-display" id="face-shape-display">
 
+                <button id="arrowPrev" class="arrow left-arrow" data-direction="prev">←</button>
+
+                <div class="feature-display" id="face-shape-display">
+                    <!-- Default blob image -->
+                    <img id="blob" src="https://blobcdn.com/blob.svg?seed=myblob2" alt="Blob" />
                 </div>
-                <button class="arrow right-arrow" data-direction="next">→</button>
+
+                <button id="arrowNext" class="arrow right-arrow" data-direction="next">→</button>
             </div>
 
             <!-- Eyes -->
@@ -91,23 +109,16 @@
             </div>
 
         </section>
-  <!-- saveit button placed next to the preview so it's clear what will be saved -->
-         <div id="saveit-wrapper">
-            <a id="saveit-link" href="#" title="Save" aria-label="Save">
-            <img src="/DIY-emoji/images/saveit.png" id="saveit" alt="Save">
-            </a>
-         </div>
 
-         <img src="images/slug.GIF" class="slug" alt="Slug">
-    </div>
+
+        <img src="/DIY-emoji/images/slug.GIF" class="slug" alt="Slug">
 
     </main>
-    <!-- JavaScript -->
-    <script src="emoji.js"></script>
 
-
+    <!-- Your JavaScript (LOADS LAST → SAFE) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
-</body>
 
+</body>
 </html>
 

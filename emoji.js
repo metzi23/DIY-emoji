@@ -1,123 +1,116 @@
+// ----------------------------------------------------
+// Fade in
+// ----------------------------------------------------
+$('body').fadeIn(500);
+
+// ----------------------------------------------------
+// SAFEST POSSIBLE STOP-PROP UTILITY
+// ----------------------------------------------------
+function stop(e) {
+    if (!e) return;
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+}
+
+// ----------------------------------------------------
+// GENERIC FEATURE CYCLER
+// ----------------------------------------------------
 function setupFeatureCycler(featureName) {
     const disp = document.getElementById(`${featureName}-display`);
     if (!disp) return;
 
-    const images = Array.from(disp.getElementsByTagName('img'));
-    if (!images.length) return;
-
+    const images = Array.from(disp.querySelectorAll("img"));
     let index = 0;
 
-    // Update the preview layer
-    function updatePreview(src) {
+    function update() {
         const layer = document.getElementById(`emoji-${featureName}`);
-        if (!layer) return;
-        layer.innerHTML = `<img src="${src}" alt="${featureName}">`;
+        layer.innerHTML = `<img src="${images[index].src}" alt="${featureName}">`;
+
+        images.forEach(i => i.classList.remove("active"));
+        images[index].classList.add("active");
     }
 
-    // Toggle images left/right
     function toggle(dir) {
-        index = dir === 'next' ? index + 1 : index - 1;
-        if (index < 0) index = images.length - 1;
-        if (index >= images.length) index = 0;
-
-        images.forEach(img => img.classList.remove('active'));
-        images[index].classList.add('active');
-        updatePreview(images[index].src);
+        index = (index + (dir === "next" ? 1 : -1) + images.length) % images.length;
+        update();
     }
 
-    // event listeners
-    const prevBtn = document.querySelector(`.control-group[data-feature="${featureName}"] [data-direction="prev"]`);
-    const nextBtn = document.querySelector(`.control-group[data-feature="${featureName}"] [data-direction="next"]`);
-    if (prevBtn) prevBtn.onclick = () => toggle('prev');
-    if (nextBtn) nextBtn.onclick = () => toggle('next');
+    const group = document.querySelector(`.control-group[data-feature="${featureName}"]`);
+    const prev = group.querySelector('[data-direction="prev"]');
+    const next = group.querySelector('[data-direction="next"]');
 
-    // apply .active to the first image on page load
-    images[0].classList.add('active');
-    updatePreview(images[0].src);
+    prev.addEventListener("click", e => { stop(e); toggle("prev"); });
+    next.addEventListener("click", e => { stop(e); toggle("next"); });
+
+    // Click on thumbnails to select directly
+    images.forEach((img, idx) => {
+        img.addEventListener('click', e => {
+            stop(e);
+            index = idx;
+            update();
+        });
+    });
+
+    update();
 }
 
+// ----------------------------------------------------
+// BLOB CYCLER (FACE SHAPE) WITH SYNCHRONIZED COLOR
+// ----------------------------------------------------
+function setupBlobCycler() {
+    const max = 10;
+    let index = 2;
 
-// Eyes
-const eyesDisp = document.getElementById('eyes-display');
-if (eyesDisp) {
-    const eyesImages = Array.from(eyesDisp.getElementsByTagName('img'));
-    let eyesIndex = 0;
+    const blobImg = document.getElementById("blob");
+    const layer = document.getElementById("emoji-face-shape");
 
-    function toggleEyes(dir) {
-        eyesIndex = dir === 'next' ? eyesIndex + 1 : eyesIndex - 1;
-        if (eyesIndex < 0) eyesIndex = eyesImages.length - 1;
-        if (eyesIndex >= eyesImages.length) eyesIndex = 0;
+    let currentHue = 0;
 
-        eyesImages.forEach(img => img.classList.remove('active'));
-        eyesImages[eyesIndex].classList.add('active');
+    function update() {
+        const src = `https://blobcdn.com/blob.svg?seed=myblob${index}`;
+        blobImg.src = src;
 
-        // update preview
-        const layer = document.getElementById('emoji-eyes');
-        layer.innerHTML = `<img src="${eyesImages[eyesIndex].src}" alt="eyes">`;
+        // Apply current hue to both previews
+        blobImg.style.filter = `hue-rotate(${currentHue}deg)`;
+        layer.innerHTML = `<img src="${src}" alt="face-shape" style="filter:hue-rotate(${currentHue}deg)">`;
     }
 
-    document.querySelector('.control-group[data-feature="eyes"] [data-direction="prev"]')
-        .onclick = () => toggleEyes('prev');
-    document.querySelector('.control-group[data-feature="eyes"] [data-direction="next"]')
-        .onclick = () => toggleEyes('next');
+    const prev = document.getElementById("arrowPrev");
+    const next = document.getElementById("arrowNext");
 
-    // show first on load
-    eyesImages[0].classList.add('active');
-    document.getElementById('emoji-eyes').innerHTML = `<img src="${eyesImages[0].src}" alt="eyes">`;
-}
+    prev.addEventListener("click", e => {
+        stop(e);
+        index = index <= 1 ? max : index - 1;
+        update();
+    });
 
-// Nose
-const noseDisp = document.getElementById('nose-display');
-if (noseDisp) {
-    const noseImages = Array.from(noseDisp.getElementsByTagName('img'));
-    let noseIndex = 0;
+    next.addEventListener("click", e => {
+        stop(e);
+        index = index >= max ? 1 : index + 1;
+        update();
+    });
 
-    function toggleNose(dir) {
-        noseIndex = dir === 'next' ? noseIndex + 1 : noseIndex - 1;
-        if (noseIndex < 0) noseIndex = noseImages.length - 1;
-        if (noseIndex >= noseImages.length) noseIndex = 0;
-
-        noseImages.forEach(img => img.classList.remove('active'));
-        noseImages[noseIndex].classList.add('active');
-
-        const layer = document.getElementById('emoji-nose');
-        layer.innerHTML = `<img src="${noseImages[noseIndex].src}" alt="nose">`;
+    // Randomize color independently
+    function randomizeColor() {
+        currentHue = Math.floor(Math.random() * 360);
+        update();
     }
 
-    document.querySelector('.control-group[data-feature="nose"] [data-direction="prev"]')
-        .onclick = () => toggleNose('prev');
-    document.querySelector('.control-group[data-feature="nose"] [data-direction="next"]')
-        .onclick = () => toggleNose('next');
+    // Attach randomizeColor to the button
+    const colorBtn = document.getElementById('saveit-link');
+    colorBtn.addEventListener('click', e => {
+        stop(e);
+        randomizeColor();
+    });
 
-    // show first on load
-    noseImages[0].classList.add('active');
-    document.getElementById('emoji-nose').innerHTML = `<img src="${noseImages[0].src}" alt="nose">`;
+    update();
 }
 
-// Mouth
-const mouthDisp = document.getElementById('mouth-display');
-if (mouthDisp) {
-    const mouthImages = Array.from(mouthDisp.getElementsByTagName('img'));
-    let mouthIndex = 0;
-
-    function toggleMouth(dir) {
-        mouthIndex = dir === 'next' ? mouthIndex + 1 : mouthIndex - 1;
-        if (mouthIndex < 0) mouthIndex = mouthImages.length - 1;
-        if (mouthIndex >= mouthImages.length) mouthIndex = 0;
-
-        mouthImages.forEach(img => img.classList.remove('active'));
-        mouthImages[mouthIndex].classList.add('active');
-
-        const layer = document.getElementById('emoji-mouth');
-        layer.innerHTML = `<img src="${mouthImages[mouthIndex].src}" alt="mouth">`;
-    }
-
-    document.querySelector('.control-group[data-feature="mouth"] [data-direction="prev"]')
-        .onclick = () => toggleMouth('prev');
-    document.querySelector('.control-group[data-feature="mouth"] [data-direction="next"]')
-        .onclick = () => toggleMouth('next');
-
-    // show first on load
-    mouthImages[0].classList.add('active');
-    document.getElementById('emoji-mouth').innerHTML = `<img src="${mouthImages[0].src}" alt="mouth">`;
-}
+// ----------------------------------------------------
+// Initialize all features
+// ----------------------------------------------------
+setupBlobCycler();
+setupFeatureCycler("eyes");
+setupFeatureCycler("nose");
+setupFeatureCycler("mouth");
